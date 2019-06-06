@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import './styles.css';
 import { getSwansonQuote, getTriva } from './api-calls';
-import { clearScores,checkAnswer, displayAnswers, displayQuestion, displayPlayerScore, applyAnswer, displayResponse, buildPlayerForm, createPlayerObjects } from './functions';
+import { clearScores,checkAnswer, displayAnswers, displayQuestion, displayPlayerScore, applyAnswer, displayResponse, buildPlayerForm, createPlayerObjects, buildPlayerCountForm, getPlayers, displayPlayers } from './functions';
 import Ron1 from './../src/img/Ron1.png';
 import { Game } from './objects';
 
@@ -13,7 +13,7 @@ if(!sessionStorage.getItem('newGame')) {
 }
 
 if(!sessionStorage.getItem('game')) {
-  // let newGame = new Game();
+  buildPlayerCountForm();
   sessionStorage.setItem('game', new Game());
 }
 
@@ -77,11 +77,10 @@ function attatchListeners(){
   //create player objects in sessionStorage
   $('#preGame').on('click', '#playerInfoSubmit', ()=>{
     let players = (createPlayerObjects());
-    console.log(players);
-    
     sessionStorage.setItem('game', JSON.stringify(players));
-    console.log(sessionStorage.getItem('game'));
-    console.log(JSON.parse(sessionStorage.getItem('game'))[0].name);
+    $('#preGame').empty();
   });
+
+  $('#testButton').on('click', ()=> displayPlayers());
 
 }

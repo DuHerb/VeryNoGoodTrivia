@@ -29,6 +29,7 @@ export function displayQuestion(responseObj){
 
 export function clearScores(){
   sessionStorage.setItem('score', 0);
+  sessionStorage.clear();
   displayPlayerScore();
 }
 
@@ -59,6 +60,13 @@ export function getPlayerCount() {
   return sessionStorage.getItem('playerCount');
 }
 
+export function buildPlayerCountForm(){
+  $('#preGame').append('<form id="playerCountForm"></form>');
+  $('#playerCountForm').append('<h3>How many players?</h3>');
+  $('#playerCountForm').append('<input type="text" id="playerCount">');
+  $('#playerCountForm').append('<button id="submitPlayerCount">Next</button>');
+}
+
 export function buildPlayerForm(){
   let count = getPlayerCount();
   $('#preGame').append('<form id="playerInfoForm"></form>');
@@ -79,4 +87,17 @@ export function createPlayerObjects() {
     players.push(player);
   }
   return players;
+}
+
+export function getPlayers() {
+  let players = JSON.parse(sessionStorage.getItem('game'));
+  return players;
+}
+
+export function displayPlayers() {
+  // let count = getPlayerCount();
+  let players = getPlayers();
+  players.forEach(player => {
+    $('#players').append('<div class="player"><p>'+ player.name +'</p></div><div class="score">'+ player.score +'</div>');
+  });
 }
